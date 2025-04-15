@@ -2,6 +2,12 @@ package org.example.kitsurecs.model;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.Console;
+
+
+//Revision History:
+//      NAME            DATE                        COMMENTS
+// Derrick Mangari  2025/04/15      Added new field role and made remaining methods without session token and DAOs(made comments on steps to take)
 public class User {
     //fields
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -10,6 +16,7 @@ public class User {
     private String email;
     private String password;
     private String profile_picture;
+    private Role role;
 
 
     //getters
@@ -28,8 +35,10 @@ public class User {
     public String getEmail() {
         return email;
     }
+    public Role getRole() {return role;}
 
     //setters
+    public void setUsername(String newUsername) {username=newUsername;}
     public void setPassword(String newPassword) {
         password = newPassword;
     }
@@ -39,29 +48,49 @@ public class User {
     public void setEmail(String newEmail) {
         email = newEmail;
     }
+    public void setRole(Role newRole) {role = newRole;}
 
     //constructor
-    public User(String user_id,String username, String email, String password, String profilePicture) {
+    public User(String user_id,String username, String email, String password, String profilePicture, Role role) {
         this.user_id = user_id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.profile_picture = profilePicture;
+        this.role = role;
     }
 
     //methods
-    public void login(){
 
+    //method to login
+    public void login(String inputEmail, String inputPassword){
+        //send inputEmail to DAO
+        //DAO returns password
+        //if password matches inputPassword
+        //create session token(logged in)
     }
 
-    public void register(){
-
-    }
-
+    //methods to logout
     public void logout(){
-
+        //delete/remove session token
     }
 
+
+    //method to register
+    public void register(String username, String email, String password, String profilePicture){
+        try{
+            String hashPassword = hashPassword(password);
+            role = Role.user;
+            User newUser = new User(null, username, email, hashPassword, profilePicture, role);
+            //need DAO create User
+            //takes all info and creates User
+            System.out.println("User created successfully!");
+        }catch(Exception e){
+            System.out.println("Failed to register user: " + e);
+        }
+
+
+    }
     public void changeEmail(String email){
         setEmail(email);
     }
