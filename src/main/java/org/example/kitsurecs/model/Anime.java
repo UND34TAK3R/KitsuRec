@@ -1,3 +1,7 @@
+//Revision History:
+//      NAME                DATE                        COMMENTS
+//      Derrick Mangari     2025/04/18              Added Setters
+
 package org.example.kitsurecs.model;
 
 import java.util.List;
@@ -37,6 +41,14 @@ public class Anime {
     public String getRating() {
         return rating;
     }
+
+    //setters
+    public void setAnime_id(int anime_id) { this.anime_id = anime_id; }
+    public void setTitle(String title) { this.title = title; }
+    public void setSynopsis(String synopsis) { this.synopsis = synopsis; }
+    public void setMean(Double mean) { this.mean = mean; }
+    public void setGenres(List<Genre> genres) { this.genres = genres; }
+    public void setType(String type) { this.type = type; }
 
     //constructor
     public Anime(int anime_id, String title, String synopsis, Double mean, List<Genre> genres, String type, String rating) {

@@ -1,9 +1,10 @@
 //Revision History:
-//      NAME            DATE                        COMMENTS
-// Derrick Mangari  2025/04/15      Added Login Servlet, creates a session token and adds attributes userId, username and profile picture in session token
-//                                  Need to add DAO to finish
+//      NAME              DATE                        COMMENTS
+// Derrick Mangari      2025/04/15      Added Login Servlet, creates a session token and adds attributes userId, username and profile picture in session token
+//                                      Need to add DAO to finish
+// Derrick Mangari      2025/04/18      Refactored the structure
 
-package org.example.kitsurecs.session;
+package org.example.kitsurecs.controller;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.example.kitsurecs.model.User;
+import org.example.kitsurecs.util.CookieManager;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {

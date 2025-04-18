@@ -1,8 +1,9 @@
 //Revision History:
 //      NAME            DATE                        COMMENTS
-// Derrick Mangari  2025/04/15      Added Cookie Manager to create, get and delete a Cookie
+// Derrick Mangari      2025/04/15      Added Cookie Manager to create, get and delete a Cookie
+// Derrick Mangari      2025/04/18      Refactored the structure
 
-package org.example.kitsurecs.session;
+package org.example.kitsurecs.util;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
