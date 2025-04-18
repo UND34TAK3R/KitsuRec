@@ -1,8 +1,9 @@
 //Revision History:
 //      NAME            DATE                        COMMENTS
 // Derrick Mangari      2025/04/15      Created Session Manager to get Users, to check if user is logged in, get username, get profile picture
+// Derrick Mangari      2025/04/18      Refactored the structure
 
-package org.example.kitsurecs.session;
+package org.example.kitsurecs.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

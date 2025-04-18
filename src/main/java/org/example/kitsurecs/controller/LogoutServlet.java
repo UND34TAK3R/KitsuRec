@@ -1,8 +1,9 @@
 //Revision History:
 //      NAME            DATE                        COMMENTS
 // Derrick Mangari  2025/04/15      Added logout servlet (deletes user session token)
+// Derrick Mangari      2025/04/18      Refactored the structure
 
-package org.example.kitsurecs.session;
+package org.example.kitsurecs.controller;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
