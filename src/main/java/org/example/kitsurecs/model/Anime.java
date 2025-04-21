@@ -15,17 +15,15 @@ public class Anime {
     private String synopsis;
     private Double mean;
     private List<Genre> genres;
-    private String type;
-    private String rating;
+    private String media_type;
 
 
     //getters
-    public int getAnime_id() {
-        return anime_id;
-    }
+    public int getAnime_id() { return anime_id; }
     public String getTitle() {
         return title;
     }
+    public Main_Picture getMain_picture() {return main_picture; }
     public String getSynopsis() {
         return synopsis;
     }
@@ -35,29 +33,27 @@ public class Anime {
     public List<Genre> getGenres() {
         return genres;
     }
-    public String getType() {
-        return type;
-    }
-    public String getRating() {
-        return rating;
+    public String getMediaType() {
+        return media_type;
     }
 
     //setters
     public void setAnime_id(int anime_id) { this.anime_id = anime_id; }
     public void setTitle(String title) { this.title = title; }
     public void setSynopsis(String synopsis) { this.synopsis = synopsis; }
+    public void setMain_picture(Main_Picture main_picture) { this.main_picture = main_picture; }
     public void setMean(Double mean) { this.mean = mean; }
     public void setGenres(List<Genre> genres) { this.genres = genres; }
-    public void setType(String type) { this.type = type; }
+    public void setMediaType(String media_type) { this.media_type = media_type; }
 
     //constructor
-    public Anime(int anime_id, String title, String synopsis, Double mean, List<Genre> genres, String type, String rating) {
+    public Anime(int anime_id, String title, Main_Picture main_picture, String synopsis, Double mean, List<Genre> genres, String media_type) {
         this.anime_id = anime_id;
         this.title = title;
+        this.main_picture = main_picture;
         this.synopsis = synopsis;
         this.mean = mean;
         this.genres = genres;
-        this.type = type;
-        this.rating = rating;
+        this.media_type = media_type;
     }
 }

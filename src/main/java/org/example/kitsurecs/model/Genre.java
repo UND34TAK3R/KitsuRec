@@ -1,6 +1,7 @@
 //Revision History:
 //      NAME                DATE                        COMMENTS
 //      Derrick Mangari     2025/04/18              Added Setters
+//      Derrick Mangari     2025/04/21              Added Constructors
 
 package org.example.kitsurecs.model;
 
@@ -19,5 +20,10 @@ public class Genre {
     }
     public String getName(){
         return name;
+    }
+
+    public Genre(int genreId, String name) {
+        this.genreId = genreId;
+        this.name = name;
     }
 }

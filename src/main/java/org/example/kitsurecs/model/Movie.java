@@ -24,8 +24,8 @@ public class Movie extends Anime {
     public void setMovie_release_date(String movie_release_date) { this.movie_release_date = movie_release_date; }
 
     //constructor
-    public Movie(int anime_id, String title, String synopsis, Double mean, List<Genre> genres, String type, String rating, int duration, String movie_release_date) {
-        super(anime_id, title, synopsis, mean, genres, type, rating);
+    public Movie(int anime_id, String title, Main_Picture main_picture, String synopsis, Double mean, List<Genre> genres, String media_type, int duration, String movie_release_date) {
+        super(anime_id, title, main_picture, synopsis, mean, genres, media_type);
         this.duration = duration;
         this.movie_release_date = movie_release_date;
     }

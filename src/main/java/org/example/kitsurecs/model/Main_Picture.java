@@ -1,6 +1,8 @@
 //Revision History:
 //      NAME                DATE                        COMMENTS
 //      Derrick Mangari     2025/04/18              Added Setters
+//      Derrick Mangari     2025/04/21              Added Constructors
+
 package org.example.kitsurecs.model;
 
 public class Main_Picture {
@@ -20,4 +22,13 @@ public class Main_Picture {
     public String getLarge(){
         return large;
     }
+
+    //constructor
+    public Main_Picture(String medium, String large){
+        this.medium = medium;
+        this.large = large;
+    }
 }
+
+
+
