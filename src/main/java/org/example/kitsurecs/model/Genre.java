@@ -26,4 +26,9 @@ public class Genre {
         this.genreId = genreId;
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return name; // or return "Genre{id=" + id + ", name='" + name + "'}";
+    }
 }

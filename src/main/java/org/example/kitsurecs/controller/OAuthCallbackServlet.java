@@ -9,6 +9,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.example.kitsurecs.auth.TokenManager;
 
 import java.io.IOException;
 
@@ -16,5 +18,23 @@ import java.io.IOException;
 public class OAuthCallbackServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String code = request.getParameter("code");
+
+        // Retrieve the code verifier from session
+        HttpSession session = request.getSession();
+        String codeVerifier = (String) session.getAttribute("code_verifier");
+
+        // Use code and codeVerifier to get the token
+        TokenManager tokenManager = new TokenManager();
+        boolean isAuthenticated = tokenManager.fetchAccessToken(code, codeVerifier);
+
+        //used for testing
+        System.out.println("Authorization Code: " + code);
+
+        //used for testing
+        if (isAuthenticated) {
+            response.getWriter().write("Authentication successful!");
+        } else {
+            response.getWriter().write("Authentication failed.");
+        }
     }
 }
