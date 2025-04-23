@@ -35,12 +35,11 @@ public class Show extends Anime {
     public void setAverage_episode_duration(int average_episode_duration) { this.average_episode_duration = average_episode_duration; }
 
     //constructor
-    public Show(int anime_id, String title, String synopsis, Double mean, List<Genre> genres, String type, String rating, String start_date, String end_date, int num_episodes, int average_episode_duration) {
-        super(anime_id, title, synopsis, mean, genres, type, rating);
+    public Show(int anime_id, String title, Main_Picture main_picture, String synopsis, Double mean, List<Genre> genres, String media_type, String start_date, String end_date, int num_episodes, int average_episode_duration) {
+        super(anime_id, title, main_picture, synopsis, mean, genres, media_type);
         this.start_date = start_date;
         this.end_date = end_date;
         this.num_episodes = num_episodes;
         this.average_episode_duration = average_episode_duration;
     }
-
 }
