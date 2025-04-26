@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.example.kitsurecs.auth.TokenManager;
 import org.example.kitsurecs.config.MalApiConfig;
 
 import java.io.IOException;
@@ -17,16 +18,30 @@ import static org.example.kitsurecs.util.PCKEUtil.generateCodeVerifier;
 
 @WebServlet("/mal-login")
 public class MalLoginServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, IOException {
-        // Generate code verifier
-        String codeVerifier = generateCodeVerifier();
-
-        // Store in session
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.setAttribute("code_verifier", codeVerifier);
-        System.out.println(codeVerifier);
+        TokenManager tokenManager = (TokenManager) session.getAttribute("tokenManager");
 
-        // Generate auth URL using this code verifier
+        // If we have a token manager with a refresh token, try to refresh
+        if (tokenManager != null && tokenManager.getRefreshToken() != null) {
+            boolean refreshed = tokenManager.refreshAccessToken(tokenManager.getRefreshToken());
+            if (refreshed) {
+                // Successfully refreshed, redirect to main app
+                response.sendRedirect("/dashboard");
+                return;
+            }
+        }
+
+        // If we get here, we need to do the full auth flow
+        String codeVerifier = generateCodeVerifier();
+        session.setAttribute("code_verifier", codeVerifier);
+
+        if (tokenManager == null) {
+            tokenManager = new TokenManager();
+            session.setAttribute("tokenManager", tokenManager);
+        }
+        tokenManager.setCodeVerifier(codeVerifier);
+
         String codeChallenge = codeVerifier; // For method="plain"
         String authUrl = "https://myanimelist.net/v1/oauth2/authorize" +
                 "?response_type=code" +
@@ -35,7 +50,6 @@ public class MalLoginServlet extends HttpServlet {
                 "&code_challenge=" + codeChallenge +
                 "&code_challenge_method=plain";
 
-        // Redirect to auth URL
         response.sendRedirect(authUrl);
     }
 }

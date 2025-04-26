@@ -4,6 +4,7 @@
 // Derrick Mangari      2025/04/21      Finished creating JsonParser Class(needs to be tested)
 // Derrick Mangari      2025/04/22      Tested and made few modifications
 // Derrick Mangari      2025/04/23      added comments
+// Derrick Mangari      2025/04/26      Added methods to extract refresh token and check when Extract expires
 
 package org.example.kitsurecs.util;
 
@@ -135,5 +136,30 @@ public class JsonParser {
             default:
                 throw new IllegalArgumentException("Unsupported anime type: " + media_type);
         }
+    }
+
+    public static String extractRefreshToken(String json) {
+        // Extract refresh_token value from JSON
+        // Simple implementation - you might want to use a proper JSON library
+        if (json.contains("refresh_token")) {
+            int start = json.indexOf("refresh_token") + 15;
+            int end = json.indexOf("\"", start + 1);
+            return json.substring(start, end);
+        }
+        return null;
+    }
+
+    public static int extractExpiresIn(String json) {
+        // Extract expires_in value from JSON
+        // Simple implementation - you might want to use a proper JSON library
+        if (json.contains("expires_in")) {
+            int start = json.indexOf("expires_in") + 12;
+            int end = json.indexOf(",", start);
+            if (end == -1) {
+                end = json.indexOf("}", start);
+            }
+            return Integer.parseInt(json.substring(start, end).trim());
+        }
+        return 3600; // Default to 1 hour if not found
     }
 }
