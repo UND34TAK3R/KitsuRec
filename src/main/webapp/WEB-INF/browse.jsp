@@ -1,18 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Dmang
-  Date: 2025-04-26
-  Time: 14:30
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<html>
-<head>
-    <title>Browse Anime - KitsuRecs</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-</head>
-<body>
+
+<%@include file="header.jsp"%>
 <header>
     <h1>Browse Anime</h1>
     <!-- Navigation links -->
@@ -38,5 +25,4 @@
     <span>Page ${currentPage}</span>
     <a href="?page=${currentPage + 1}">Next</a>
 </div>
-</body>
-</html>
+<%@include file="footer.jsp"%>
