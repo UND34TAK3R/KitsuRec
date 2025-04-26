@@ -4,7 +4,7 @@
 //                                      Need to update corresponding to Anime Object
 // Derrick Mangari      2025/04/21      Finished creating MalService Class(needs to be tested)
 // Derrick Mangari      2025/04/21      Added Comments
-
+// Derrick Mangari      2025/04/26      Added Browse Anime method
 package org.example.kitsurecs.services;
 
 
@@ -14,6 +14,7 @@ import org.example.kitsurecs.config.MalApiConfig;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.example.kitsurecs.model.Anime;
 import org.example.kitsurecs.util.JsonParser;
+import org.example.kitsurecs.auth.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -23,6 +24,8 @@ import java.util.List;
 @ApplicationScoped
 public class MalService {
     private final String accessToken;
+
+
 
     //constructors
     @Inject
@@ -56,6 +59,21 @@ public class MalService {
         //Return the response and Parse it with JSONParser
         String jsonResponse = readResponse(connection);
         return JsonParser.parseAnimeDetails(jsonResponse);
+    }
+
+    public List<Anime> browseAnime (int offset, int limit) throws IOException {
+        if(accessToken == null){
+            TokenManager.fetchAccessToken();
+        }
+       String fields = MalApiConfig.ANIME_FIELDS;
+       URL url = new URL(MalApiConfig.API_BASE_URL + "anime/ranking?ranking_type=all&limit=" + limit +
+               "&offset=" + offset + "&fields=" + fields);
+       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+       connection.setRequestMethod("GET");
+       connection.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+       String jsonResponse = readResponse(connection);
+       return JsonParser.parseAnimeList(jsonResponse);
     }
 
     //method to read the responses from the queries
