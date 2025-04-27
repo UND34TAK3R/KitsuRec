@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 
 import static java.lang.System.err;
 
-public class WatchListDAOImpl implements WatchlistDAO {
+public class WatchlistDAOImpl implements WatchlistDAO {
 
     @Override
     public WatchList findWatchList(int watchListID) {
