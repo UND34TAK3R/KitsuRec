@@ -70,7 +70,9 @@
 <!-- Header Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container">
-        <a class="navbar-brand" href="index.jsp">Kitsu Rec</a>
+        <a class = "navbar-brand d-flex align-items-center" href = "index.jsp">
+            <img src = "${pageContext.request.contextPath}/images/kitsurec-logo.png" alt = "KitsuRec logo" style = "height: 60px;">
+        </a>
         <div class="d-flex">
             <button id="themeToggle" class="btn btn-outline-primary ms-2">
                 <span id="themeIcon">🌙</span>
