@@ -12,7 +12,7 @@ public interface UsersDAO {
      * @param user_email the User email
      * @return true if successful
      */
-    boolean registerUser(String user_id, String username, String password, String user_email);
+    boolean registerUser(int user_id, String username, String password, String user_email);
 
     /**
      * Login a user to the website

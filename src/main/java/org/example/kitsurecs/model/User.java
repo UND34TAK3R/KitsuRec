@@ -11,7 +11,7 @@ import java.io.Console;
 public class User {
     //fields
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    private final String user_id;
+    private final int user_id;
     private String username;
     private String email;
     private String password;
@@ -20,7 +20,7 @@ public class User {
 
 
     //getters
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
     public String getUsername() {
@@ -51,7 +51,7 @@ public class User {
     public void setRole(Role newRole) {role = newRole;}
 
     //constructor
-    public User(String user_id,String username, String email, String password, String profilePicture, Role role) {
+    public User(int user_id,String username, String email, String password, String profilePicture, Role role) {
         this.user_id = user_id;
         this.username = username;
         this.email = email;
@@ -81,7 +81,7 @@ public class User {
         try{
             String hashPassword = hashPassword(password);
             role = Role.user;
-            User newUser = new User(null, username, email, hashPassword, profilePicture, role);
+            User newUser = new User(0, username, email, hashPassword, profilePicture, role);
             //need DAO create User
             //takes all info and creates User
             System.out.println("User created successfully!");
