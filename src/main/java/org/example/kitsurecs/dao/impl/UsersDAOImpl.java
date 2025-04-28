@@ -13,6 +13,14 @@ import java.sql.SQLException;
 import static java.lang.System.err;
 
 public class UsersDAOImpl implements UsersDAO {
+    /**
+     * Registers the user in the database
+     * @param user_id the User ID
+     * @param username the Username
+     * @param password the Password
+     * @param user_email the User email
+     * @return true if successful, false is unsucessful
+     */
     @Override
     public boolean registerUser(String user_id, String username, String password, String user_email) {
         Connection conn = null;
@@ -29,11 +37,12 @@ public class UsersDAOImpl implements UsersDAO {
 
             // Insert if user doesn't exist yet
             if (count == 0) {
-                PreparedStatement stmt = conn.prepareStatement("INSERT INTO Users (user_id, username, email, password) VALUES (?, ?, ?, ?)");
+                PreparedStatement stmt = conn.prepareStatement("INSERT INTO Users (user_id, username, email, password, profile_picture) VALUES (?, ?, ?, ?, ?)");
                 stmt.setString(1, user_id);
                 stmt.setString(2, username);
                 stmt.setString(3, user_email);
                 stmt.setString(4, password);
+                stmt.setString(5, "");
                 int result = stmt.executeUpdate();
                 return result > 0;
             }
@@ -46,6 +55,12 @@ public class UsersDAOImpl implements UsersDAO {
         }
     }
 
+    /**
+     * Logs the user onto the website using the database to check
+     * @param email the user's email
+     * @param password the user's password (non-hashed)
+     * @return the user if successful, null if unsuccessful
+     */
     @Override
     public User loginUser(String email, String password) {
         Connection conn = null;
@@ -80,6 +95,11 @@ public class UsersDAOImpl implements UsersDAO {
         }
     }
 
+    /**
+     * Save a user's changes
+     * @param user the specified user
+     * @return true if successful, false otherwise
+     */
     @Override
     public boolean saveUser(User user) {
         Connection conn = null;
@@ -96,7 +116,7 @@ public class UsersDAOImpl implements UsersDAO {
             PreparedStatement stmt = null;
             if (count > 0) {
                 // Update user
-                stmt = conn.prepareStatement("UPDATE Users SET username = ?, email = ?, password = ?, profilepicture = ?");
+                stmt = conn.prepareStatement("UPDATE Users SET username = ?, email = ?, password = ?, profile_picture = ?");
                 stmt.setString(1, user.getUsername());
                 stmt.setString(2, user.getEmail());
                 stmt.setString(3, user.hashPassword(user.getPassword()));
@@ -113,6 +133,11 @@ public class UsersDAOImpl implements UsersDAO {
         }
     }
 
+    /**
+     * Deletes a specified user from the database
+     * @param user the specified user
+     * @return true if successful, otherwise false
+     */
     @Override
     public boolean deleteUser(User user) {
         Connection conn = null;
@@ -130,6 +155,11 @@ public class UsersDAOImpl implements UsersDAO {
         }
     }
 
+    /**
+     * Verifies if a specifies email exists
+     * @param email the email to check
+     * @return true if found, otherwise false
+     */
     @Override
     public boolean emailExists(String email) {
         Connection conn = null;

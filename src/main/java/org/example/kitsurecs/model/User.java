@@ -9,7 +9,7 @@ import java.io.Console;
 //      NAME            DATE                        COMMENTS
 // Derrick Mangari  2025/04/15      Added new field role and made remaining methods without session token and DAOs(made comments on steps to take)
 public class User {
-    //fields
+    // Fields
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private final String user_id;
     private String username;
@@ -19,7 +19,7 @@ public class User {
     private Role role;
 
 
-    //getters
+    // Getters
     public String getUser_id() {
         return user_id;
     }
@@ -37,7 +37,7 @@ public class User {
     }
     public Role getRole() {return role;}
 
-    //setters
+    // Setters
     public void setUsername(String newUsername) {username=newUsername;}
     public void setPassword(String newPassword) {
         password = newPassword;
@@ -50,7 +50,15 @@ public class User {
     }
     public void setRole(Role newRole) {role = newRole;}
 
-    //constructor
+    /**
+     * User constructor
+     * @param user_id the user ID
+     * @param username the username
+     * @param email the user's email
+     * @param password the user's password (non-hashed)
+     * @param profilePicture the user's profile picture
+     * @param role the user's role (user/admin)
+     */
     public User(String user_id,String username, String email, String password, String profilePicture, Role role) {
         this.user_id = user_id;
         this.username = username;
@@ -60,11 +68,22 @@ public class User {
         this.role = role;
     }
 
-    //methods
+    // Methods
+
+    /**
+     * Hashes a specified password
+     * @param password the password to hash
+     * @return the hashed password
+     */
     public String hashPassword(String password){
         return encoder.encode(password);
     }
 
+    /**
+     * Checks a specified password
+     * @param password password to check
+     * @return true if matches, else false
+     */
     public boolean checkPassword(String password){
         return encoder.matches(password, this.password);
     }

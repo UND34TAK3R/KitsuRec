@@ -7,15 +7,15 @@ package org.example.kitsurecs.model;
 
 public class Main_Picture {
 
-    //fields
+    // Fields
     private String medium;
     private String large;
 
-    //setters
+    // Setters
     public void setMedium(String medium) { this.medium = medium; }
     public void setLarge(String large) { this.large = large; }
 
-    //getters
+    // Getters
     public String getMedium() {
         return medium;
     }
@@ -23,7 +23,11 @@ public class Main_Picture {
         return large;
     }
 
-    //constructor
+    /**
+     * Main_Picture constructor
+     * @param medium medium size image
+     * @param large large size image
+     */
     public Main_Picture(String medium, String large){
         this.medium = medium;
         this.large = large;
