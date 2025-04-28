@@ -40,18 +40,19 @@
         event.preventDefault(); // Stop normal form submission
 
         const form = event.target;
-        const formData = new FormData(form);
+        const formData = new URLSearchParams(new FormData(form)); // <-- changed here!
 
         fetch(form.action, {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // <-- also set this!
+            }
         })
             .then(response => {
                 if (response.redirected) {
-                    // If login succeeded, redirect to /mal-login for MAL authentication
                     window.location.href = '${pageContext.request.contextPath}/mal-login';
                 } else {
-                    // Login failed, reload to show error messages
                     window.location.reload();
                 }
             })

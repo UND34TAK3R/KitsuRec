@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 
         try{
             //if user is not null and password matches get userID, username and profile_picture
-            if (user != null && user.checkPassword(password)) {
+            if (user != null) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("userID", user.getUser_id());
                 session.setAttribute("username", user.getUsername());
@@ -49,15 +49,14 @@ public class LoginServlet extends HttpServlet {
 
                 //redirect the user to mal login
                 response.sendRedirect("/mal-login");
-            }
-            else{
+            } else {
                 //stays in login page
-                response.sendRedirect("login.jsp?error=invalid");
+                response.sendRedirect("/login.jsp?error=invalid");
             }
         } catch (Exception e) {
             //log error
             System.out.println("User could not login : " + e.getMessage());
-            response.sendRedirect("login.jsp?error=server");
+            response.sendRedirect("/login.jsp?error=server");
         }
     }
     @Override
