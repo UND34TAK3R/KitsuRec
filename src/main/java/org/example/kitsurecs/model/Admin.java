@@ -6,17 +6,34 @@ package org.example.kitsurecs.model;
 
 public class Admin extends User {
 
-    //constructor
+    // Constructors
+
+    /**
+     * Admin Constructor
+     * @param user_id
+     * @param username
+     * @param email
+     * @param password
+     * @param profilePicture
+     * @param role
+     */
     public Admin(String user_id, String username, String email, String password, String profilePicture, Role role) {
         super(user_id, username, email, password, profilePicture, role);
     }
 
-    //set role
+    /**
+     * Changes the role of a specified user
+     * @param newRole role to change to
+     * @param user to change role
+     */
     public void changeRole(Role newRole, User user) {
         user.setRole(newRole);
     }
 
-    //method to delete a user
+    /**
+     * Delete a user
+     * @param user user to delete
+     */
     public void deleteUser(User user) {
         try {
             String user_id = user.getUser_id();
@@ -26,7 +43,10 @@ public class Admin extends User {
         }
     }
 
-    //method to update User Info
+    /**
+     * Updates a specified user's info
+     * @param user user to update
+     */
     public  void UpdateUserInfo(User user) {
         try {
             String user_id = user.getUser_id();
@@ -37,7 +57,14 @@ public class Admin extends User {
         }
     }
 
-    //method to add Users
+    /**
+     * Add a user manually
+     * @param username username to use
+     * @param email email to use
+     * @param password password to use
+     * @param profilePicture profile picture to use
+     * @param role role to use
+     */
     public void AddUser(String username, String email, String password, String profilePicture, Role role){
         try{
             String hashPassword = hashPassword(password);

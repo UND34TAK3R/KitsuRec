@@ -16,6 +16,11 @@ import static java.lang.System.err;
 
 public class WatchlistDAOImpl implements WatchlistDAO {
 
+    /**
+     * Finds a watchlist from a watchlist ID
+     * @param watchListID the WatchListID to search
+     * @return the full watchlist if found, null otherwise
+     */
     @Override
     public WatchList findWatchList(int watchListID) {
         WatchList searchList = null;
@@ -55,6 +60,10 @@ public class WatchlistDAOImpl implements WatchlistDAO {
         return searchList;
     }
 
+    /**
+     * Finds all watchlist available
+     * @return list of watchlist if found, empty if error
+     */
     @Override
     public List<WatchList> findAllWatchLists() {
         Connection conn = null;
@@ -94,6 +103,11 @@ public class WatchlistDAOImpl implements WatchlistDAO {
         return watchLists;
     }
 
+    /**
+     * Saves any changes made to a watchlist or watchlist item
+     * @param watchList the watchList to save
+     * @return true if successful, false otherwise
+     */
     @Override
     public boolean saveWatchList(WatchList watchList) {
         Connection conn = null;

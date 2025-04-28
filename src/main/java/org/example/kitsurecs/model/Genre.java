@@ -6,15 +6,15 @@
 package org.example.kitsurecs.model;
 
 public class Genre {
-    //fields
+    // Fields
     private int genreId;
     private String name;
 
-    //setters
+    // Setters
     public void setGenreId(int genreId) { this.genreId = genreId; }
     public void setName(String name) { this.name = name; }
 
-    //getters
+    // Getters
     public int getGenreId() {
         return genreId;
     }
@@ -22,6 +22,11 @@ public class Genre {
         return name;
     }
 
+    /**
+     * Genre constructor
+     * @param genreId the genre ID
+     * @param name the genre name
+     */
     public Genre(int genreId, String name) {
         this.genreId = genreId;
         this.name = name;
