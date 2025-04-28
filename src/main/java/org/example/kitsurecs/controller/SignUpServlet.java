@@ -49,6 +49,10 @@ public class SignUpServlet extends HttpServlet {
                 return;
             }
 
+            if (usersDAO.emailExists(email)) {
+                response.sendRedirect(request.getContextPath()+"signup.jsp?error=email-already-exists");
+            }
+
             if (password == null || !PASSWORD_PATTERN.matcher(password).matches()) {
                 response.sendRedirect(request.getContextPath()+"signup.jsp?error=invalid-password");
                 return;
@@ -60,6 +64,10 @@ public class SignUpServlet extends HttpServlet {
             }
 
             usersDAO.registerUser(0, username, email, password);
+
+            User temp = new User(0, username, email, password, "", role);
+            String hashedPW = temp.hashPassword(password);
+            usersDAO.registerUserToDatabase(0, username, email, hashedPW);
 
             response.sendRedirect(request.getContextPath()+"/login.jsp");
 

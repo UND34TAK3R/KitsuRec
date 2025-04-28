@@ -2,6 +2,8 @@ package org.example.kitsurecs.dao;
 
 import org.example.kitsurecs.model.User;
 
+import java.sql.SQLException;
+
 public interface UsersDAO {
 
     /**
@@ -35,4 +37,21 @@ public interface UsersDAO {
      * @return true if successful
      */
     boolean deleteUser(User users);
+
+    /**
+     * Registers a specified user to the database
+     * @param user_id the user id
+     * @param username the username
+     * @param password the password (non-hashed)
+     * @param user_email the user email
+     * @throws SQLException sql exception
+     */
+    void registerUserToDatabase(int user_id, String username, String password, String user_email);
+
+    /**
+     * Checks if the email exists (helps for registration)
+     * @param email the user's email
+     * @return true if exists
+     */
+    boolean emailExists(String email);
 }

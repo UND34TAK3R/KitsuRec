@@ -9,14 +9,16 @@
                 %><div class="error-message">Username must be between 4-15 characters</div><%
             } else if (error.equals("invalid-email")) {
                 %><div class="error-message">Please enter a valid email address</div><%
+            } else if (error.equals("email-already-exists")) {
+                %><div class="error-message">This email is already registered. Please login or use another email to register</div> <%
             } else if (error.equals("invalid-password")) {
                 %><div class="error-message">Password must be 8-15 characters long and contain at least one number</div><%
             } else if (error.equals("password-not-match")) {
                 %><div class="error-message">Passwords do not match</div><%
             } else if (error.equals("internal-error")) {
                 %><div class="error-message">An error occurred. Please try again later</div><%
+            }
         }
-    }
 %>
 
     <form action="signup" method="post">
