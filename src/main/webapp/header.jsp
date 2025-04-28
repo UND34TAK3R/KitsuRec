@@ -64,6 +64,23 @@
         a {
             transition: color 0.2s ease;
         }
+
+        /* Cards Styles */
+        .card {
+            transition: background 0.5s, color 0.5s, box-shadow 0.3s;
+        }
+
+        body.light-mode .card {
+            background-color: #ffffff;
+            color: #212529;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .card {
+            background-color: #333333;
+            color: #f8f9fa;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        }
     </style>
 </head>
 <body class="light-mode">
