@@ -1,5 +1,4 @@
 <%@include file="header.jsp"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <header>
     <h1>${anime.title}</h1>
@@ -18,7 +17,6 @@
             <h2>${anime.title}</h2>
 
             <p><strong>Rating:</strong> ${anime.mean}/10</p>
-            <p><strong>Status:</strong> ${anime.status}</p>
             <p><strong>Episodes:</strong> ${anime.num_episodes}</p>
             <p><strong>Start Date:</strong> ${anime.start_date}</p>
             <c:if test="${anime.end_date != null}">
@@ -33,34 +31,6 @@
                     </c:forEach>
                 </ul>
             </div>
-
-            <!-- Add to Watch List form -->
-            <form action="${pageContext.request.contextPath}/watchlist" method="POST">
-                <input type="hidden" name="animeId" value="${anime.id}">
-
-                <c:choose>
-                    <c:when test="${inWatchlist}">
-                        <div class="watchlist-controls">
-                            <button type="submit" name="action" value="remove" class="btn btn-danger">Remove from Watch List</button>
-
-                            <div class="watchlist-options">
-                                <label>
-                                    <input type="checkbox" name="watched" value="true" ${watchListItem.watched ? 'checked' : ''}>
-                                    Watched
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="favorite" value="true" ${watchListItem.favorite ? 'checked' : ''}>
-                                    Favorite
-                                </label>
-                                <button type="submit" name="action" value="update" class="btn btn-secondary">Update Status</button>
-                            </div>
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <button type="submit" name="action" value="add" class="btn btn-primary">Add to Watch List</button>
-                    </c:otherwise>
-                </c:choose>
-            </form>
         </div>
     </div>
 
