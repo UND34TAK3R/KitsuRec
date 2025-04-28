@@ -35,7 +35,7 @@ public class DbUtil {
 
     /**
      * Close a connection quietly (without throwing exceptions)
-     * @param Connection the connection to close
+     * @param conn the connection to close
      */
     public static void closeQuietly(Connection conn) {
         if (conn != null) {
