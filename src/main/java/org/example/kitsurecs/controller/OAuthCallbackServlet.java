@@ -27,12 +27,10 @@ public class OAuthCallbackServlet extends HttpServlet {
         TokenManager tokenManager = new TokenManager();
         boolean isAuthenticated = tokenManager.fetchAccessToken(code, codeVerifier);
 
-        //used for testing
-        System.out.println("Authorization Code: " + code);
-
-        //used for testing
+        // Store tokenManager in session if authenticated
         if (isAuthenticated) {
-            response.getWriter().write("Authentication successful!");
+            session.setAttribute("tokenManager", tokenManager);
+            response.sendRedirect(request.getContextPath() + "/home");
         } else {
             response.getWriter().write("Authentication failed.");
         }

@@ -62,47 +62,6 @@ public class User {
 
     //methods
 
-    //method to login
-    public void login(String inputEmail, String inputPassword){
-        //send inputEmail to DAO
-        //DAO returns password
-        //if password matches inputPassword
-        //create session token(logged in)
-    }
-
-    //methods to logout
-    public void logout(){
-        //delete/remove session token
-    }
-
-
-    //method to register
-    public void register(String username, String email, String password, String profilePicture){
-        try{
-            String hashPassword = hashPassword(password);
-            role = Role.user;
-            User newUser = new User(null, username, email, hashPassword, profilePicture, role);
-            //need DAO create User
-            //takes all info and creates User
-            System.out.println("User created successfully!");
-        }catch(Exception e){
-            System.out.println("Failed to register user: " + e);
-        }
-
-
-    }
-    public void changeEmail(String email){
-        setEmail(email);
-    }
-
-    public void changePassword(String newPassword){
-        setPassword(newPassword);
-    }
-
-    public void changeProfilePicture(String newProfilePicture){
-        setProfile_picture(newProfilePicture);
-    }
-    //To confirm
     public String hashPassword(String password){
         return encoder.encode(password);
     }

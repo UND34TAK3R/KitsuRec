@@ -54,9 +54,8 @@ public class UsersDAOImpl implements UsersDAO {
             conn = DbUtil.getConnection();
 
             // Check if user exists
-            PreparedStatement checkStmt = conn.prepareStatement("SELECT COUNT(*) FROM Users WHERE email = ? AND password = ?");
+            PreparedStatement checkStmt = conn.prepareStatement("SELECT COUNT(*) FROM Users WHERE email = ?");
             checkStmt.setString(1, email);
-            checkStmt.setString(2, password);
 
             ResultSet rs = checkStmt.executeQuery();
             if (rs.next()) {

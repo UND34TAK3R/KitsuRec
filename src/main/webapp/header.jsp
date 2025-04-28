@@ -17,8 +17,8 @@
     } else if (uri.contains("profile")) {
         title += " - Profile";
 
-    } else if (uri.contains("favorites")) {
-        title += " - Favorites";
+    } else if (uri.contains("watchlist")) {
+        title += " - Watch List";
 
     } else if (uri.contains("error")) {
         title += " - Error";
