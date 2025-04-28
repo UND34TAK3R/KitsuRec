@@ -13,7 +13,7 @@
             </c:if>
             <h3>${anime.title}</h3>
             <p>Rating: ${anime.mean}/10</p>
-            <a href="${pageContext.request.contextPath}/browse?id=${anime.id}">View Details</a>
+            <a href="${pageContext.request.contextPath}/browse?id=${anime.anime_id}">View Details</a>
         </div>
     </c:forEach>
 </main>

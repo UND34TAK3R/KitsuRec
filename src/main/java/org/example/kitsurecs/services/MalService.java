@@ -1,12 +1,4 @@
-//Revision History:
-//      NAME            DATE                        COMMENTS
-// Derrick Mangari      2025/04/15      Created this service to get Json Anime Info
-//                                      Need to update corresponding to Anime Object
-// Derrick Mangari      2025/04/21      Finished creating MalService Class(needs to be tested)
-// Derrick Mangari      2025/04/21      Added Comments
-// Derrick Mangari      2025/04/26      Added Browse Anime method
 package org.example.kitsurecs.services;
-
 
 import jakarta.inject.Inject;
 import org.example.kitsurecs.config.MalApiConfig;
@@ -23,22 +15,22 @@ import java.util.List;
 
 @ApplicationScoped
 public class MalService {
-    private final String accessToken;
+    private final TokenManager tokenManager;
 
-    private final TokenManager tokenManager = new TokenManager();
-
-
-    //constructors
     @Inject
-    public MalService(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public MalService(){
-        this.accessToken = null;
+    public MalService(TokenManager tokenManager) {
+        this.tokenManager = tokenManager;
     }
 
     public List<Anime> searchAnime(String query) throws IOException {
+        // Get the token from the token manager
+        String accessToken = tokenManager.getAccessToken();
+
+        // Check if we have a valid access token
+        if (accessToken == null) {
+            throw new IOException("No access token available. User must authenticate first.");
+        }
+
         //create and send query with every anime fields
         URL url = new URL(MalApiConfig.API_BASE_URL + "/anime?q=" + query + "&limit=5&fields=" + MalApiConfig.ANIME_FIELDS);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -51,6 +43,14 @@ public class MalService {
     }
 
     public Anime getAnimeDetails(String animeId) throws IOException {
+        // Get the token from the token manager
+        String accessToken = tokenManager.getAccessToken();
+
+        // Check if we have a valid access token
+        if (accessToken == null) {
+            throw new IOException("No access token available. User must authenticate first.");
+        }
+
         //create and send query with every anime fields
         URL url = new URL(MalApiConfig.API_BASE_URL + "/anime/" + animeId + "?fields=" + MalApiConfig.ANIME_FIELDS);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -63,6 +63,9 @@ public class MalService {
     }
 
     public List<Anime> browseAnime(int offset, int limit) throws IOException {
+        // Get the token from the token manager
+        String accessToken = tokenManager.getAccessToken();
+
         // Check if we have a valid access token
         if (accessToken == null) {
             throw new IOException("No access token available. User must authenticate first.");
@@ -92,4 +95,3 @@ public class MalService {
         return response.toString();
     }
 }
-

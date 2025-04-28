@@ -12,7 +12,7 @@
         <!-- Need to add logo to assets and call it -->
         <span class="logo"><a href="index.jsp"></a></span>
         <a href="index.jsp">Home</a>
-        <a href="browse.jsp">Browse</a>
+        <a href="browse">Browse</a>
         <a href="watchlist.jsp">Watch List</a>
         <a href="profile.jsp">Profile</a>
         <button class="logout">Logout</button>

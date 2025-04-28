@@ -53,18 +53,17 @@ public class UsersDAOImpl implements UsersDAO {
             conn = DbUtil.getConnection();
 
             // Check if user exists
-            PreparedStatement checkStmt = conn.prepareStatement("SELECT user_id, username, email, password, profile_picture FROM Users WHERE email = ?");
+            PreparedStatement checkStmt = conn.prepareStatement("SELECT user_id, username, email, password FROM Users WHERE email = ?");
             checkStmt.setString(1, email);
 
             ResultSet rs = checkStmt.executeQuery();
             if (rs.next()) {
                 String uid = rs.getString("user_id");
                 String username = rs.getString("username");
-                String pfp = rs.getString("profile_picture");
                 String hashedPw = rs.getString("password"); // Hashed password
 
                 // Unhash the password
-                User temp = new User(uid, username, email, hashedPw, pfp, Role.user);
+                User temp = new User(uid, username, email, hashedPw, "", Role.user);
                 if (temp.checkPassword(hashedPw)) {
                     return temp;
                 } else {
@@ -96,7 +95,7 @@ public class UsersDAOImpl implements UsersDAO {
             PreparedStatement stmt = null;
             if (count > 0) {
                 // Update user
-                stmt = conn.prepareStatement("UPDATE Users SET username = ?, email = ?, password = ?, profilepicture = ?");
+                stmt = conn.prepareStatement("UPDATE Users SET username = ?, email = ?, password = ?, profile_picture = ?");
                 stmt.setString(1, user.getUsername());
                 stmt.setString(2, user.getEmail());
                 stmt.setString(3, user.hashPassword(user.getPassword()));

@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.example.kitsurecs.auth.TokenManager;
 import org.example.kitsurecs.dao.UsersDAO;
 import org.example.kitsurecs.dao.impl.UsersDAOImpl;
 import org.example.kitsurecs.model.User;
@@ -40,9 +41,11 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("userID", user.getUser_id());
                 session.setAttribute("username", user.getUsername());
                 session.setAttribute("profile_picture", user.getProfile_picture());
-
                 //return true or false if request is secure
                 boolean isSecure = request.isSecure();
+
+                TokenManager tokenManager = new TokenManager();
+                session.setAttribute("tokenManager", tokenManager);
 
                 //creates cookie with user info
                 CookieManager.createCookie(response, "JSESSIONID", session.getId(), -1, isSecure);
