@@ -54,18 +54,25 @@ public class UsersDAOImpl implements UsersDAO {
             conn = DbUtil.getConnection();
 
             // Check if user exists
-            PreparedStatement checkStmt = conn.prepareStatement("SELECT COUNT(*) FROM Users WHERE email = ?");
+            PreparedStatement checkStmt = conn.prepareStatement("SELECT user_id, username, email, password FROM Users WHERE email = ?");
             checkStmt.setString(1, email);
 
             ResultSet rs = checkStmt.executeQuery();
             if (rs.next()) {
                 String uid = rs.getString("user_id");
                 String username = rs.getString("username");
-                String pfp = rs.getString("profilePicture");
-                Role role = Role.valueOf(rs.getString("role"));
-                return new User(uid, username, email, password, pfp, role);
+                String pfp = rs.getString("profile_picture");
+                String dbPassword = rs.getString("password"); // Hashed password
+
+                // Unhash the password
+                User temp = new User(uid, username, email, dbPassword, pfp, Role.user);
+                if (users.checkPassword(dbPassword)) {
+                    return temp;
+                } else {
+                    return null;
+                }
             }
-            return null;
+            return null; // not found
         } catch (SQLException e) {
             err.println("An error has occured when trying to login user: " + e.getMessage());
             return null;
