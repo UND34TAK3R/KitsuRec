@@ -69,7 +69,7 @@ public class SignUpServlet extends HttpServlet {
             String hashedPW = temp.hashPassword(password);
             usersDAO.registerUserToDatabase(0, username, email, hashedPW);
 
-            response.sendRedirect(request.getContextPath()+"/login.jsp");
+            response.sendRedirect(request.getContextPath()+"/signup-success.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();
