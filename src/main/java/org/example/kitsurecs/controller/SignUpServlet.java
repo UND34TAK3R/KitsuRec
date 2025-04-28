@@ -59,7 +59,7 @@ public class SignUpServlet extends HttpServlet {
                 return;
             }
 
-            usersDAO.registerUser("", username, email, password);
+            usersDAO.registerUser(0, username, email, password);
 
             response.sendRedirect(request.getContextPath()+"/login.jsp");
 
