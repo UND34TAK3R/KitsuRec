@@ -68,18 +68,17 @@ public class UsersDAOImpl implements UsersDAO {
             conn = DbUtil.getConnection();
 
             // Check if user exists
-            PreparedStatement checkStmt = conn.prepareStatement("SELECT user_id, username, email, password, profile_picture FROM Users WHERE email = ?");
+            PreparedStatement checkStmt = conn.prepareStatement("SELECT user_id, username, email, password FROM Users WHERE email = ?");
             checkStmt.setString(1, email);
 
             ResultSet rs = checkStmt.executeQuery();
             if (rs.next()) {
                 String uid = rs.getString("user_id");
                 String username = rs.getString("username");
-                String pfp = rs.getString("profile_picture");
                 String hashedPw = rs.getString("password"); // Hashed password
 
                 // Unhash the password
-                User temp = new User(uid, username, email, hashedPw, pfp, Role.user);
+                User temp = new User(uid, username, email, hashedPw, "", Role.user);
                 if (temp.checkPassword(hashedPw)) {
                     return temp;
                 } else {

@@ -5,6 +5,7 @@
 // Derrick Mangari      2025/04/22      Tested and made few modifications
 // Derrick Mangari      2025/04/23      added comments
 // Derrick Mangari      2025/04/26      Added methods to extract refresh token and check when Extract expires
+// [Your Name]          2025/04/28      Added support for additional media types like "tv_special"
 
 package org.example.kitsurecs.util;
 
@@ -37,9 +38,9 @@ public class JsonParser {
             //Get every fields necessary from one node(one anime)
             int id = node.getInt("id");
             String title = node.getString("title");
-            String synopsis = node.getString("synopsis");
+            String synopsis = node.optString("synopsis", "No synopsis available");
             Main_Picture main_picture = null;
-            Double mean = node.getDouble("mean");
+            Double mean = node.optDouble("mean", 0.0);
             List<Genre> genres = new ArrayList<>();
             String media_type = node.has("media_type") ? node.getString("media_type") : "unknown";
 
@@ -54,16 +55,20 @@ public class JsonParser {
 
             //if it has genres it retrieves every genre the node has
             if (node.has("genres")) {
-                JSONArray genreArray = node.getJSONArray("genres"); // ✅ correct source
+                JSONArray genreArray = node.getJSONArray("genres");
                 for (int j = 0; j < genreArray.length(); j++) {
                     JSONObject genre = genreArray.getJSONObject(j);
                     genres.add(new Genre(genre.getInt("id"), genre.getString("name")));
                 }
             }
 
-
+            // Handle different media types
             switch (media_type) {
-                //if a tv show it creates a Show Object and adds it to the AnimeList
+                // Handle TV shows and variants
+                case "special":
+                case "tv_special":
+                case "ova":
+                case "ona":
                 case "tv":
                     String start_date = node.optString("start_date", "");
                     String end_date = node.optString("end_date", "");
@@ -71,15 +76,21 @@ public class JsonParser {
                     int average_episode_duration = node.optInt("average_episode_duration", 0);
                     animeList.add(new Show(id, title, main_picture, synopsis, mean, genres, media_type, start_date, end_date, num_episodes, average_episode_duration));
                     break;
-                //if a movie it creates a Movie object and adds it to the AnimeList
+                // Handle movies
                 case "movie":
                     int duration = node.optInt("average_episode_duration", 0);
                     String movie_release_date = node.optString("start_date", "");
                     animeList.add(new Movie(id, title, main_picture, synopsis, mean, genres, media_type, duration, movie_release_date));
                     break;
-                //if not a movie or a show we don't handle it
+                // Handle unknown types more gracefully
                 default:
-                    throw new IllegalArgumentException("Unsupported anime type: " + media_type);
+                    System.out.println("Unknown anime type: " + media_type + " - treating as TV show");
+                    // Treat unknown types as TV shows
+                    start_date = node.optString("start_date", "");
+                    end_date = node.optString("end_date", "");
+                    num_episodes = node.optInt("num_episodes", 0);
+                    average_episode_duration = node.optInt("average_episode_duration", 0);
+                    animeList.add(new Show(id, title, main_picture, synopsis, mean, genres, media_type, start_date, end_date, num_episodes, average_episode_duration));
             }
         }
         //return the anime list
@@ -93,9 +104,9 @@ public class JsonParser {
         //Get every fields necessary from the object
         int id = obj.getInt("id");
         String title = obj.getString("title");
-        String synopsis = obj.getString("synopsis");
+        String synopsis = obj.optString("synopsis", "No synopsis available");
         Main_Picture main_picture = null;
-        Double mean = obj.getDouble("mean");
+        Double mean = obj.optDouble("mean", 0.0);
         List<Genre> genres = new ArrayList<>();
         String media_type = obj.has("media_type") ? obj.getString("media_type") : "unknown";
 
@@ -117,49 +128,43 @@ public class JsonParser {
             }
         }
 
-
+        // Handle different media types
         switch (media_type) {
-
-            //if a tv show it creates a Show Object and return it
+            // Handle TV shows and variants
+            case "special":
+            case "tv_special":
+            case "ova":
+            case "ona":
             case "tv":
-                String start_date = obj.getString("start_date");
-                String end_date = obj.getString("end_date");
-                int num_episodes = obj.getInt("num_episodes");
-                int average_episode_duration = obj.getInt("average_episode_duration");
-                 return new Show(id, title, main_picture, synopsis, mean, genres, media_type, start_date, end_date, num_episodes, average_episode_duration);
-            //if a movie, it creates a Movie Object and return it
+                String start_date = obj.optString("start_date", "");
+                String end_date = obj.optString("end_date", "");
+                int num_episodes = obj.optInt("num_episodes", 0);
+                int average_episode_duration = obj.optInt("average_episode_duration", 0);
+                return new Show(id, title, main_picture, synopsis, mean, genres, media_type, start_date, end_date, num_episodes, average_episode_duration);
+            // Handle movies
             case "movie":
-                int duration = obj.getInt("average_episode_duration");
-                String movie_release_date = obj.getString("start_date");
+                int duration = obj.optInt("average_episode_duration", 0);
+                String movie_release_date = obj.optString("start_date", "");
                 return new Movie(id, title, main_picture, synopsis, mean, genres, media_type, duration, movie_release_date);
-            //Otherwise if not movie or show me don't handle it
+            // Handle unknown types more gracefully
             default:
-                throw new IllegalArgumentException("Unsupported anime type: " + media_type);
+                System.out.println("Unknown anime type: " + media_type + " - treating as TV show");
+                // Treat unknown types as TV shows
+                start_date = obj.optString("start_date", "");
+                end_date = obj.optString("end_date", "");
+                num_episodes = obj.optInt("num_episodes", 0);
+                average_episode_duration = obj.optInt("average_episode_duration", 0);
+                return new Show(id, title, main_picture, synopsis, mean, genres, media_type, start_date, end_date, num_episodes, average_episode_duration);
         }
     }
 
     public static String extractRefreshToken(String json) {
-        // Extract refresh_token value from JSON
-        // Simple implementation - you might want to use a proper JSON library
-        if (json.contains("refresh_token")) {
-            int start = json.indexOf("refresh_token") + 15;
-            int end = json.indexOf("\"", start + 1);
-            return json.substring(start, end);
-        }
-        return null;
+        JSONObject obj = new JSONObject(json);
+        return obj.optString("refresh_token", null);
     }
 
     public static int extractExpiresIn(String json) {
-        // Extract expires_in value from JSON
-        // Simple implementation - you might want to use a proper JSON library
-        if (json.contains("expires_in")) {
-            int start = json.indexOf("expires_in") + 12;
-            int end = json.indexOf(",", start);
-            if (end == -1) {
-                end = json.indexOf("}", start);
-            }
-            return Integer.parseInt(json.substring(start, end).trim());
-        }
-        return 3600; // Default to 1 hour if not found
+        JSONObject obj = new JSONObject(json);
+        return obj.optInt("expires_in", 3600); // Default to 1 hour if not found
     }
 }

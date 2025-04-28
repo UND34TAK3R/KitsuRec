@@ -36,19 +36,20 @@ public class MalLoginServlet extends HttpServlet {
         String codeVerifier = generateCodeVerifier();
         session.setAttribute("code_verifier", codeVerifier);
 
-        if (tokenManager == null) {
-            tokenManager = new TokenManager();
-            session.setAttribute("tokenManager", tokenManager);
-        }
-        tokenManager.setCodeVerifier(codeVerifier);
+        // If using plain method (the code verifier itself is the challenge)
+        String codeChallenge = codeVerifier;
+        String codeChallengeMethod = "plain";
 
-        String codeChallenge = codeVerifier; // For method="plain"
+// OR if using S256 method (which appears to be what your code is actually doing)
+// String codeChallenge = generateCodeChallenge(codeVerifier); // Base64URL(SHA256(codeVerifier))
+// String codeChallengeMethod = "S256";
+
         String authUrl = "https://myanimelist.net/v1/oauth2/authorize" +
                 "?response_type=code" +
                 "&client_id=" + MalApiConfig.CLIENT_ID +
                 "&redirect_uri=" + URLEncoder.encode(MalApiConfig.REDIRECT_URI, StandardCharsets.UTF_8) +
                 "&code_challenge=" + codeChallenge +
-                "&code_challenge_method=plain";
+                "&code_challenge_method=" + codeChallengeMethod;
 
         response.sendRedirect(authUrl);
     }

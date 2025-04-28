@@ -24,7 +24,7 @@ public class OAuthCallbackServlet extends HttpServlet {
         String codeVerifier = (String) session.getAttribute("code_verifier");
 
         // Use code and codeVerifier to get the token
-        TokenManager tokenManager = new TokenManager();
+        TokenManager tokenManager = new TokenManager();  // <-- This creates a new TokenManager
         boolean isAuthenticated = tokenManager.fetchAccessToken(code, codeVerifier);
 
         // Store tokenManager in session if authenticated

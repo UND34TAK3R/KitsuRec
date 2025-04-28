@@ -6,6 +6,7 @@
 
 package org.example.kitsurecs.auth;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import org.example.kitsurecs.config.MalApiConfig;
 import org.example.kitsurecs.util.JsonParser;
 
@@ -18,6 +19,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+@ApplicationScoped
 public class TokenManager {
 
     //fields
