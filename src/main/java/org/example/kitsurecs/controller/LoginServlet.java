@@ -48,15 +48,15 @@ public class LoginServlet extends HttpServlet {
                 CookieManager.createCookie(response, "JSESSIONID", session.getId(), -1, isSecure);
 
                 //redirect the user to mal login
-                response.sendRedirect("/mal-login");
+                response.sendRedirect(request.getContextPath() + "/mal-login");
             } else {
                 //stays in login page
-                response.sendRedirect("/login.jsp?error=invalid");
+                response.sendRedirect(request.getContextPath() + "/login.jsp?error=invalid");
             }
         } catch (Exception e) {
             //log error
             System.out.println("User could not login : " + e.getMessage());
-            response.sendRedirect("/login.jsp?error=server");
+            response.sendRedirect(request.getContextPath() + "/login.jsp?error=server");
         }
     }
     @Override

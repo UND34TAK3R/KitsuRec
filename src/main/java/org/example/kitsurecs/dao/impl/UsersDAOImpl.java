@@ -49,12 +49,11 @@ public class UsersDAOImpl implements UsersDAO {
     @Override
     public User loginUser(String email, String password) {
         Connection conn = null;
-        User users = null;
         try {
             conn = DbUtil.getConnection();
 
             // Check if user exists
-            PreparedStatement checkStmt = conn.prepareStatement("SELECT user_id, username, email, password FROM Users WHERE email = ?");
+            PreparedStatement checkStmt = conn.prepareStatement("SELECT user_id, username, email, password, profile_picture FROM Users WHERE email = ?");
             checkStmt.setString(1, email);
 
             ResultSet rs = checkStmt.executeQuery();
@@ -62,11 +61,11 @@ public class UsersDAOImpl implements UsersDAO {
                 String uid = rs.getString("user_id");
                 String username = rs.getString("username");
                 String pfp = rs.getString("profile_picture");
-                String dbPassword = rs.getString("password"); // Hashed password
+                String hashedPw = rs.getString("password"); // Hashed password
 
                 // Unhash the password
-                User temp = new User(uid, username, email, dbPassword, pfp, Role.user);
-                if (users.checkPassword(dbPassword)) {
+                User temp = new User(uid, username, email, hashedPw, pfp, Role.user);
+                if (temp.checkPassword(hashedPw)) {
                     return temp;
                 } else {
                     return null;
