@@ -40,40 +40,41 @@ public class SignUpServlet extends HttpServlet {
 
         try {
             if (username == null || username.length() > USERNAME_MAX_LENGTH || username.length() < USERNAME_MIN_LENGTH) {
-                response.sendRedirect(request.getContextPath()+"signup.jsp?error=invalid-username");
+                response.sendRedirect(request.getContextPath()+"/signup.jsp?error=invalid-username");
                 return;
             }
 
             if (email == null || !EMAIL_PATTERN.matcher(email).matches()) {
-                response.sendRedirect(request.getContextPath()+"signup.jsp?error=invalid-email");
+                response.sendRedirect(request.getContextPath()+"/signup.jsp?error=invalid-email");
                 return;
             }
 
-            if (usersDAO.emailExists(email)) {
-                response.sendRedirect(request.getContextPath()+"signup.jsp?error=email-already-exists");
+            if (usersDAO.emailExists(email.toLowerCase())) {
+                response.sendRedirect(request.getContextPath()+"/signup.jsp?error=email-already-exists");
+                return;
             }
 
             if (password == null || !PASSWORD_PATTERN.matcher(password).matches()) {
-                response.sendRedirect(request.getContextPath()+"signup.jsp?error=invalid-password");
+                response.sendRedirect(request.getContextPath()+"/signup.jsp?error=invalid-password");
                 return;
             }
 
             if (!password.equals(confirmPassword)) {
-                response.sendRedirect(request.getContextPath()+"signup.jsp?error=password-not-match");
+                response.sendRedirect(request.getContextPath()+"/signup.jsp?error=password-not-match");
                 return;
             }
 
-            usersDAO.registerUser("", username, email, password);
-
-            User temp = new User("", username, email, password, "", role);
+            User temp = new User(userid, username, email, password, profilePicture, role);
             String hashedPW = temp.hashPassword(password);
-            usersDAO.registerUserToDatabase("", username, email, hashedPW);
+
+            usersDAO.registerUser(userid, username, hashedPW, email);
+            //usersDAO.registerUserToDatabase(userid, username, hashedPW, email);
 
             response.sendRedirect(request.getContextPath()+"/signup-success.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath()+"signup.jsp?error=internal-error");
+            response.sendRedirect(request.getContextPath()+"/signup.jsp?error=internal-error");
         }
     }
     @Override

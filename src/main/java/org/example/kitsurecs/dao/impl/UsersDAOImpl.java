@@ -39,7 +39,7 @@ public class UsersDAOImpl implements UsersDAO {
             }
             return true;
         } catch (SQLException e) {
-            err.println("An error has occured when trying to register a student: " + e.getMessage());
+            err.println("An error has occured when trying to register a user: " + e.getMessage());
             return false;
         } finally {
             DbUtil.closeQuietly(conn);
@@ -130,10 +130,11 @@ public class UsersDAOImpl implements UsersDAO {
 
         try {
             conn = DbUtil.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Users (username, email, password) VALUES (?, ?, ?)");
-            stmt.setString(1, username);
-            stmt.setString(2, user_email);
-            stmt.setString(3, password);
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Users (user_id, username, email, password) VALUES (?, ?, ?, ?)");
+            stmt.setString(1, user_id);
+            stmt.setString(2, username);
+            stmt.setString(3, user_email);
+            stmt.setString(4, password);
             stmt.executeUpdate();
         } catch (SQLException e) {
             err.println("Error registering user to the database: " + e.getMessage());

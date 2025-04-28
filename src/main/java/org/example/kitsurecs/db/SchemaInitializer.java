@@ -16,16 +16,15 @@ public class SchemaInitializer {
             // Table creation
             Statement stmt = conn.createStatement();
 
+
             // Create User table
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Users (" +
                             "  user_id VARCHAR(36) PRIMARY KEY,  " +
                             "  username VARCHAR(20) NOT NULL,  " +
-                            "  email VARCHAR2(30) UNIQUE NOT NULL,  " +
-                            "  password VARCHAR2(50) NOT NULL,  " +
-                            "  profile_picture VARCHAR2(100),   " +
-                            "  created_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  " +
-                            "  modified_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                            "  email VARCHAR2(30) NOT NULL,  " +
+                            "  password VARCHAR2(60) NOT NULL,  " +
+                            "  profile_picture VARCHAR2(100)" +
                             ")"
             );
             out.println("Users table created.");
@@ -35,8 +34,7 @@ public class SchemaInitializer {
                     "CREATE TABLE IF NOT EXISTS Watchlist (" +
                         "  watchlist_id INT PRIMARY KEY AUTO_INCREMENT,  " +
                         "  watchlist_itemid INT,  " +
-                        "  user_id INT NOT NULL,  " +
-                        "  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  " +
+                        "  user_id VARCHAR(36) NOT NULL,  " +
                         "  FOREIGN KEY (user_id) REFERENCES Users(user_id)" +
                         ")"
             );
@@ -50,7 +48,6 @@ public class SchemaInitializer {
                         "   anime_id INT,   " +
                         "   favourite BOOLEAN,   " +
                         "   watched BOOLEAN,   " +
-                        "   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   " +
                         "   FOREIGN KEY (watchlist_id) REFERENCES Watchlist(watchlist_id)" +
                         ")"
             );

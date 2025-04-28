@@ -8,18 +8,25 @@
             String error = request.getParameter("error");
             if (error != null) {
                 String errorMessage = "";
-                if (error.equals("invalid-username")) {
-                    errorMessage = "Username must be between 4-15 characters";
-                } else if (error.equals("invalid-email")) {
-                    errorMessage = "Please enter a valid email address";
-                } else if (error.equals("email-already-exists")) {
-                    errorMessage = "This email is already registered. Please login or use another email to register";
-                } else if (error.equals("invalid-password")) {
-                    errorMessage = "Password must be 8-15 characters long and contain at least one number";
-                } else if (error.equals("password-not-match")) {
-                    errorMessage = "Passwords do not match";
-                } else if (error.equals("internal-error")) {
-                    errorMessage = "An error occurred. Please try again later";
+                switch (error) {
+                    case "invalid-username":
+                        errorMessage = "Username must be between 4-15 characters";
+                        break;
+                    case "invalid-email":
+                        errorMessage = "Please enter a valid email address";
+                        break;
+                    case "email-already-exists":
+                        errorMessage = "This email is already registered. Please login or use another email to register";
+                        break;
+                    case "invalid-password":
+                        errorMessage = "Password must be 8-15 characters long and contain at least one number";
+                        break;
+                    case "password-not-match":
+                        errorMessage = "Passwords do not match";
+                        break;
+                    case "internal-error":
+                        errorMessage = "An error occurred. Please try again later";
+                        break;
                 }
                 if (!errorMessage.isEmpty()) {
         %>
