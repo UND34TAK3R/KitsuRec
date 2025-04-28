@@ -14,7 +14,7 @@ public interface UsersDAO {
      * @param user_email the User email
      * @return true if successful
      */
-    boolean registerUser(int user_id, String username, String password, String user_email);
+    boolean registerUser(String user_id, String username, String password, String user_email);
 
     /**
      * Login a user to the website
@@ -46,7 +46,7 @@ public interface UsersDAO {
      * @param user_email the user email
      * @throws SQLException sql exception
      */
-    void registerUserToDatabase(int user_id, String username, String password, String user_email);
+    void registerUserToDatabase(String user_id, String username, String password, String user_email);
 
     /**
      * Checks if the email exists (helps for registration)

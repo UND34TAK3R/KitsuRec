@@ -14,7 +14,7 @@ import static java.lang.System.err;
 
 public class UsersDAOImpl implements UsersDAO {
     @Override
-    public boolean registerUser(int user_id, String username, String password, String user_email) {
+    public boolean registerUser(String user_id, String username, String password, String user_email) {
         Connection conn = null;
         try {
             conn = DbUtil.getConnection();
@@ -30,7 +30,7 @@ public class UsersDAOImpl implements UsersDAO {
             // Insert if user doesn't exist yet
             if (count == 0) {
                 PreparedStatement stmt = conn.prepareStatement("INSERT INTO Users (user_id, username, email, password) VALUES (?, ?, ?, ?)");
-                stmt.setInt(1, user_id);
+                stmt.setString(1, user_id);
                 stmt.setString(2, username);
                 stmt.setString(3, user_email);
                 stmt.setString(4, password);
@@ -59,7 +59,7 @@ public class UsersDAOImpl implements UsersDAO {
 
             ResultSet rs = checkStmt.executeQuery();
             if (rs.next()) {
-                int uid = rs.getInt("user_id");
+                String uid = rs.getString("user_id");
                 String username = rs.getString("username");
                 String pfp = rs.getString("profilePicture");
                 Role role = Role.valueOf(rs.getString("role"));
@@ -82,7 +82,7 @@ public class UsersDAOImpl implements UsersDAO {
 
             // Check if exists
             PreparedStatement checkStmt = conn.prepareStatement("SELECT COUNT(*) FROM Users WHERE user_id = ?");
-            checkStmt.setInt(1, user.getUser_id());
+            checkStmt.setString(1, user.getUser_id());
             ResultSet rs = checkStmt.executeQuery();
             rs.next();
             int count = rs.getInt(1);
@@ -113,7 +113,7 @@ public class UsersDAOImpl implements UsersDAO {
         try {
             conn = DbUtil.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM Users WHERE user_id = ?");
-            stmt.setInt(1, user.getUser_id());
+            stmt.setString(1, user.getUser_id());
             int result = stmt.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
@@ -125,7 +125,7 @@ public class UsersDAOImpl implements UsersDAO {
     }
 
     @Override
-    public void registerUserToDatabase(int user_id, String username, String password, String user_email) {
+    public void registerUserToDatabase(String user_id, String username, String password, String user_email) {
         Connection conn = null;
 
         try {

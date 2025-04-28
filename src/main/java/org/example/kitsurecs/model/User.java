@@ -11,7 +11,7 @@ import java.io.Console;
 public class User {
     //fields
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    private final int user_id;
+    private final String user_id;
     private String username;
     private String email;
     private String password;
@@ -20,7 +20,7 @@ public class User {
 
 
     //getters
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
     public String getUsername() {
@@ -51,7 +51,7 @@ public class User {
     public void setRole(Role newRole) {role = newRole;}
 
     //constructor
-    public User(int user_id,String username, String email, String password, String profilePicture, Role role) {
+    public User(String user_id,String username, String email, String password, String profilePicture, Role role) {
         this.user_id = user_id;
         this.username = username;
         this.email = email;

@@ -63,11 +63,11 @@ public class SignUpServlet extends HttpServlet {
                 return;
             }
 
-            usersDAO.registerUser(0, username, email, password);
+            usersDAO.registerUser("", username, email, password);
 
-            User temp = new User(0, username, email, password, "", role);
+            User temp = new User("", username, email, password, "", role);
             String hashedPW = temp.hashPassword(password);
-            usersDAO.registerUserToDatabase(0, username, email, hashedPW);
+            usersDAO.registerUserToDatabase("", username, email, hashedPW);
 
             response.sendRedirect(request.getContextPath()+"/signup-success.jsp");
 
