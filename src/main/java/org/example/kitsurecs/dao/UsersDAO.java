@@ -38,15 +38,6 @@ public interface UsersDAO {
      */
     boolean deleteUser(User users);
 
-    /**
-     * Registers a specified user to the database
-     * @param user_id the user id
-     * @param username the username
-     * @param password the password (non-hashed)
-     * @param user_email the user email
-     * @throws SQLException sql exception
-     */
-    void registerUserToDatabase(String user_id, String username, String password, String user_email);
 
     /**
      * Checks if the email exists (helps for registration)

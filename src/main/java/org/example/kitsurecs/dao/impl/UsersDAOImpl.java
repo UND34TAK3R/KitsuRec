@@ -125,26 +125,6 @@ public class UsersDAOImpl implements UsersDAO {
     }
 
     @Override
-    public void registerUserToDatabase(String user_id, String username, String password, String user_email) {
-        Connection conn = null;
-
-        try {
-            conn = DbUtil.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Users (user_id, username, email, password) VALUES (?, ?, ?, ?)");
-            stmt.setString(1, user_id);
-            stmt.setString(2, username);
-            stmt.setString(3, user_email);
-            stmt.setString(4, password);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            err.println("Error registering user to the database: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            DbUtil.closeQuietly(conn);
-        }
-    }
-
-    @Override
     public boolean emailExists(String email) {
         Connection conn = null;
         try {
