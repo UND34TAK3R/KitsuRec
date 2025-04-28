@@ -3,13 +3,13 @@ package org.example.kitsurecs.model;
 public class WatchListItem {
 
     //fields
-    private final String WatchListItemId;
+    private final int WatchListItemId;
     private final int anime_id;
     private boolean watched;
     private boolean favorite;
 
     //getters
-    public String getWatchListItemId() {
+    public int getWatchListItemId() {
         return WatchListItemId;
     }
 
@@ -17,11 +17,11 @@ public class WatchListItem {
         return anime_id;
     }
 
-    private boolean getWatched(){
+    public boolean getWatched(){
         return watched;
     }
 
-    private boolean getFavorite(){
+    public boolean getFavorite(){
         return favorite;
     }
 
@@ -34,7 +34,7 @@ public class WatchListItem {
     }
 
     //constructor
-    public WatchListItem(String WatchListItemId, int anime_id, boolean watched, boolean favorite){
+    public WatchListItem(int WatchListItemId, int anime_id, boolean watched, boolean favorite){
         this.WatchListItemId = WatchListItemId;
         this.anime_id = anime_id;
         this.watched = watched;
