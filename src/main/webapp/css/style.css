@@ -57,3 +57,43 @@ Derrick Mangari     2025/04/26      Created CSS page and added styling for brows
     gap: 20px;
     padding: 20px;
 }
+
+/* For Light Mode */
+body.light-mode .theme-card {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+body.light-mode .theme-text {
+    color: #212529;
+}
+
+body.light-mode .theme-input {
+    background-color: #ffffff;
+    color: #212529;
+    border: 1px solid #ced4da;
+}
+
+body.light-mode .theme-link {
+    color: #007bff;
+}
+
+/* For Dark Mode */
+body.dark-mode .theme-card {
+    background-color: #1f1f1f;
+    color: #f8f9fa;
+}
+
+body.dark-mode .theme-text {
+    color: #f8f9fa;
+}
+
+body.dark-mode .theme-input {
+    background-color: #333333;
+    color: #f8f9fa;
+    border: 1px solid #444444;
+}
+
+body.dark-mode .theme-link {
+    color: #17a2b8;
+}
