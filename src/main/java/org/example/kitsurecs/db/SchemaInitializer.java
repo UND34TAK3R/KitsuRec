@@ -19,7 +19,7 @@ public class SchemaInitializer {
             // Create User table
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Users (" +
-                            "  user_id INT PRIMARY KEY AUTO_INCREMENT,  " +
+                            "  user_id INT PRIMARY KEY,  " +
                             "  username VARCHAR(20) NOT NULL,  " +
                             "  email VARCHAR2(30) UNIQUE NOT NULL,  " +
                             "  password VARCHAR2(50) NOT NULL,  " +
