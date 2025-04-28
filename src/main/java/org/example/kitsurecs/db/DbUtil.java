@@ -9,14 +9,15 @@ import static java.lang.System.out;
 
 public class DbUtil {
     // JDBC URL for whichever database
-    private static final String JDBC_URL = "jdbc:h2:~/collegemanager;DB_CLOSE_DELAY=-1";
+    private static final String JDBC_URL = "jdbc:h2:tcp://localhost/~/KitsuRecs";
+    // private static final String JDBC_URL = "jdbc:h2:~/KitsuRecs;DB_CLOSE_DELAY=-1";
     private static final String USER = "sa";
     private static final String PASSWORD = "";
 
     // Static driver for JDBC driver
     static {
         try {
-            Class.forName("org.h2.driver");
+            Class.forName("org.h2.Driver");
             out.println("JDBC driver loaded successfully.");
         } catch (ClassNotFoundException e) {
             out.println("JDBC driver not found.");

@@ -24,8 +24,8 @@ public class SchemaInitializer {
                             "  email VARCHAR2(30) UNIQUE NOT NULL,  " +
                             "  password VARCHAR2(50) NOT NULL,  " +
                             "  profile_picture VARCHAR2(100),   " +
-                            "  created_datetime CURRENT_DATETIME,  " +
-                            "  modified_datetime CURRENT_DATETIME" +
+                            "  created_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  " +
+                            "  modified_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                             ")"
             );
             out.println("Users table created.");
@@ -36,7 +36,7 @@ public class SchemaInitializer {
                         "  watchlist_id INT PRIMARY KEY AUTO_INCREMENT,  " +
                         "  watchlist_itemid INT,  " +
                         "  user_id INT NOT NULL,  " +
-                        "  created_at CURRENT_DATETIME,  " +
+                        "  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  " +
                         "  FOREIGN KEY (user_id) REFERENCES Users(user_id)" +
                         ")"
             );
@@ -48,10 +48,11 @@ public class SchemaInitializer {
                         "   watchlist_itemid INT PRIMARY KEY AUTO_INCREMENT,"  +
                         "   watchlist_id INT,   " +
                         "   anime_id INT,   " +
-                        "   favourite BOOLEAN DEFAULT FALSE,   " +
-                        "   watched BOOLEAN DEFAULT FALSE,   " +
+                        "   favourite BOOLEAN,   " +
+                        "   watched BOOLEAN,   " +
                         "   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   " +
-                        "   FOREIGN KEY (watchlist_id) REFERENCES Watchlist(watchlist_id)"
+                        "   FOREIGN KEY (watchlist_id) REFERENCES Watchlist(watchlist_id)" +
+                        ")"
             );
             out.println("Watchlist item table created.");
 
@@ -61,5 +62,10 @@ public class SchemaInitializer {
         } finally {
             DbUtil.closeQuietly(conn);
         }
+    }
+
+    public static void main(String[] args) {
+        initializeSchema();
+
     }
 }
