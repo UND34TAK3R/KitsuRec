@@ -39,7 +39,7 @@ public class AnimeBrowseServlet extends HttpServlet {
             request.setAttribute("animeList", animeList);
             request.setAttribute("currentPage", page);
 
-            request.getRequestDispatcher("/WEB-INF/views/browse.jsp").forward(request, response);
+            request.getRequestDispatcher("/browse.jsp").forward(request, response);
         }catch (IOException e){
             request.setAttribute("errorMsg", "Failed to load anime list : "+e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(request, response);

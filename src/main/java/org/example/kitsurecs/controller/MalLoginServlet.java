@@ -27,7 +27,7 @@ public class MalLoginServlet extends HttpServlet {
             boolean refreshed = tokenManager.refreshAccessToken(tokenManager.getRefreshToken());
             if (refreshed) {
                 // Successfully refreshed, redirect to main app
-                response.sendRedirect("/dashboard");
+                response.sendRedirect(request.getContextPath()+"/home");
                 return;
             }
         }

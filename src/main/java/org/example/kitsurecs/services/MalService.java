@@ -25,6 +25,7 @@ import java.util.List;
 public class MalService {
     private final String accessToken;
 
+    private final TokenManager tokenManager = new TokenManager();
 
 
     //constructors
@@ -61,19 +62,21 @@ public class MalService {
         return JsonParser.parseAnimeDetails(jsonResponse);
     }
 
-    public List<Anime> browseAnime (int offset, int limit) throws IOException {
-        if(accessToken == null){
-            TokenManager.fetchAccessToken();
+    public List<Anime> browseAnime(int offset, int limit) throws IOException {
+        // Check if we have a valid access token
+        if (accessToken == null) {
+            throw new IOException("No access token available. User must authenticate first.");
         }
-       String fields = MalApiConfig.ANIME_FIELDS;
-       URL url = new URL(MalApiConfig.API_BASE_URL + "anime/ranking?ranking_type=all&limit=" + limit +
-               "&offset=" + offset + "&fields=" + fields);
-       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-       connection.setRequestMethod("GET");
-       connection.setRequestProperty("Authorization", "Bearer " + accessToken);
 
-       String jsonResponse = readResponse(connection);
-       return JsonParser.parseAnimeList(jsonResponse);
+        String fields = MalApiConfig.ANIME_FIELDS;
+        URL url = new URL(MalApiConfig.API_BASE_URL + "/anime/ranking?ranking_type=all&limit=" + limit +
+                "&offset=" + offset + "&fields=" + fields);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+        String jsonResponse = readResponse(connection);
+        return JsonParser.parseAnimeList(jsonResponse);
     }
 
     //method to read the responses from the queries

@@ -13,14 +13,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.example.kitsurecs.dao.UsersDAO;
+import org.example.kitsurecs.dao.impl.UsersDAOImpl;
 import org.example.kitsurecs.model.User;
 import org.example.kitsurecs.util.CookieManager;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    //allows user to login
-    //need to implement userDAO field
-    //private final UserDAO userDAO = new UserDAO;
+
+    private final UsersDAO usersDAO = new UsersDAOImpl();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,7 +31,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         //find the users account in db with email
-        User user = userDAO.findByEmail(email);
+        User user = usersDAO.loginUser(email, password);
 
         try{
             //if user is not null and password matches get userID, username and profile_picture
@@ -46,8 +47,8 @@ public class LoginServlet extends HttpServlet {
                 //creates cookie with user info
                 CookieManager.createCookie(response, "JSESSIONID", session.getId(), -1, isSecure);
 
-                //redirect the user to the homepage
-                response.sendRedirect("index.jsp");
+                //redirect the user to mal login
+                response.sendRedirect("/mal-login");
             }
             else{
                 //stays in login page
@@ -58,5 +59,10 @@ public class LoginServlet extends HttpServlet {
             System.out.println("User could not login : " + e.getMessage());
             response.sendRedirect("login.jsp?error=server");
         }
+    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Forward to the login page
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 }
