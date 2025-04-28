@@ -38,11 +38,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #ff5588;
+        }
+
         body.light-mode {
             background: #f8f9fa;
             color: #212529;
@@ -68,6 +76,9 @@
         /* Cards Styles */
         .card {
             transition: background 0.5s, color 0.5s, box-shadow 0.3s;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
 
         body.light-mode .card {
@@ -81,6 +92,145 @@
             color: #f8f9fa;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
         }
+
+        /* Hero Section */
+        .hero {
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        body.light-mode .hero {
+            background: linear-gradient(rgba(248, 249, 250, 0.7), rgba(248, 249, 250, 0.9)),
+            url('/api/placeholder/1920x500') center/cover no-repeat;
+        }
+
+        body.dark-mode .hero {
+            background: linear-gradient(rgba(31, 31, 31, 0.7), rgba(44, 44, 44, 0.9)),
+            url('/api/placeholder/1920x500') center/cover no-repeat;
+        }
+
+        .hero-content {
+            padding: 40px;
+        }
+
+        /* Anime Card */
+        .anime-card {
+            position: relative;
+            height: 100%;
+        }
+
+        .anime-image {
+            height: 250px;
+            position: relative;
+        }
+
+        .anime-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .anime-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .anime-type {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .anime-info {
+            padding: 15px;
+        }
+
+        .continue-watching .card {
+            margin-bottom: 15px;
+        }
+
+        .continue-image {
+            width: 120px;
+            min-width: 120px;
+            height: 100%;
+        }
+
+        .continue-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .progress {
+            height: 5px;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            background-color: var(--secondary-color);
+        }
+
+        /* Categories */
+        .category-card {
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            height: 100%;
+            padding: 20px 10px;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        body.light-mode .category-card:hover {
+            background-color: #e9ecef;
+        }
+
+        body.dark-mode .category-card:hover {
+            background-color: #444444;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .continue-card {
+                flex-direction: column;
+            }
+
+            .continue-image {
+                width: 100%;
+                height: 150px;
+            }
+
+            .continue-image img {
+                border-radius: 10px 10px 0 0;
+            }
+        }
     </style>
 </head>
 <body class="light-mode">
@@ -88,8 +238,8 @@
 <!-- Header Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container">
-        <a class = "navbar-brand d-flex align-items-center" href = "index.jsp">
-            <img src = "${pageContext.request.contextPath}/images/kitsurec-logo.png" alt = "KitsuRec logo" style = "height: 60px;">
+        <a class="navbar-brand d-flex align-items-center" href="index.jsp">
+            <img src="${pageContext.request.contextPath}/images/kitsurec-logo.png" alt="KitsuRec logo" style="height: 60px;">
         </a>
         <div class="d-flex">
             <button id="themeToggle" class="btn btn-outline-primary ms-2">
