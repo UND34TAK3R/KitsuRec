@@ -22,12 +22,19 @@
                 </button>
             </form>
 
-            <!-- Logout Button -->
-            <form action="logout" method="post" class="d-inline">
-                <button type="submit" class="btn btn-outline-danger btn-sm d-flex align-items-center">
-                    <i class="bi bi-box-arrow-right me-2"></i> Logout
-                </button>
-            </form>
+            <!-- Conditionally show Login or Logout (WILL BE FIXED LATER) -->
+                    <!-- User is logged in, show Logout -->
+                    <form action="logout" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-danger btn-sm d-flex align-items-center">
+                            <i class="bi bi-box-arrow-right me-2"></i> Logout
+                        </button>
+                    </form>
+                    <!-- User is not logged in, show Login -->
+                    <form action="login.jsp" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-outline-success btn-sm d-flex align-items-center">
+                            <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                        </button>
+                    </form>
         </div>
     </div>
 </nav>
