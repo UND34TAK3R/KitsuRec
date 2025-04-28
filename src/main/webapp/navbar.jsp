@@ -1,20 +1,33 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Dmang
-  Date: 2025-04-26
-  Time: 16:58
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<nav class="nav-bar">
-    <p>
-        <!-- Need to add logo to assets and call it -->
-        <span class="logo"><a href="index.jsp"></a></span>
-        <a href="index.jsp">Home</a>
-        <a href="browse">Browse</a>
-        <a href="watchlist.jsp">Watch List</a>
-        <a href="profile.jsp">Profile</a>
-        <button class="logout">Logout</button>
-    </p>
+<nav class="navbar navbar-expand-lg">
+    <div class="container d-flex justify-content-center">
+        <div class="d-flex align-items-center gap-3">
+            <!-- Nav buttons -->
+            <form action="browse" method="get" class="d-inline">
+                <button type="submit" class="btn btn-outline-primary btn-sm d-flex align-items-center">
+                    Browse
+                </button>
+            </form>
+
+            <form action="watchlist.jsp" method="get" class="d-inline">
+                <button type="submit" class="btn btn-outline-primary btn-sm d-flex align-items-center">
+                    Watchlist
+                </button>
+            </form>
+
+            <form action="profile.jsp" method="get" class="d-inline">
+                <button type="submit" class="btn btn-outline-primary btn-sm d-flex align-items-center">
+                    Profile
+                </button>
+            </form>
+
+            <!-- Logout Button -->
+            <form action="logout" method="post" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger btn-sm d-flex align-items-center">
+                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                </button>
+            </form>
+        </div>
+    </div>
 </nav>
