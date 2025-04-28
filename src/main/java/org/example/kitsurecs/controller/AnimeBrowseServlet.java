@@ -42,6 +42,14 @@ public class AnimeBrowseServlet extends HttpServlet {
             malService = new MalService(tokenManager);
         }
 
+        // Check if this is a request for specific anime details
+        String animeId = request.getParameter("id");
+        if (animeId != null && !animeId.isEmpty()) {
+            handleAnimeDetails(request, response, animeId);
+            return;
+        }
+
+        // Otherwise, handle listing page
         int page = 1;
         int limit = 10;
 
@@ -69,6 +77,23 @@ public class AnimeBrowseServlet extends HttpServlet {
             System.err.println("Error in browseAnime: " + e.getMessage());
             e.printStackTrace(); // Print stack trace for debugging
             request.setAttribute("errorMsg", "Failed to load anime list: " + e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+        }
+    }
+
+    private void handleAnimeDetails(HttpServletRequest request, HttpServletResponse response, String animeId)
+            throws ServletException, IOException {
+        try {
+            // Fetch the anime details
+            Anime anime = malService.getAnimeDetails(animeId);
+            request.setAttribute("anime", anime);
+
+            // Forward to anime details page
+            request.getRequestDispatcher("/anime-details.jsp").forward(request, response);
+        } catch (Exception e) {
+            System.err.println("Error fetching anime details: " + e.getMessage());
+            e.printStackTrace();
+            request.setAttribute("errorMsg", "Failed to load anime details: " + e.getMessage());
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
