@@ -12,15 +12,15 @@ public interface UsersDAO {
      * @param user_email the User email
      * @return true if successful
      */
-    boolean registerUser(int user_id, String username, String password, String user_email);
+    boolean registerUser(String user_id, String username, String password, String user_email);
 
     /**
      * Login a user to the website
-     * @param username the username
+     * @param email the username
      * @param password the password (non-hashed)
-     * @return true if successful
+     * @return the User
      */
-    boolean loginUser(String username, String password);
+    User loginUser(String email, String password);
 
     /**
      * Saves the user's profile changes
@@ -28,4 +28,11 @@ public interface UsersDAO {
      * @return true if successful
      */
     boolean saveUser(User users);
+
+    /**
+     * Deletes a user from the website
+     * @param users the User
+     * @return true if successful
+     */
+    boolean deleteUser(User users);
 }

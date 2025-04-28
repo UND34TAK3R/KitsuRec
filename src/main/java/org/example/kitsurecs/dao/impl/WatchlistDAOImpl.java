@@ -14,15 +14,21 @@ public class WatchlistDAOImpl implements WatchlistDAO {
 
     @Override
     public WatchList findWatchList(int watchListID) {
+        WatchList searchList = null;
         Connection conn = null;
         try {
             conn = DbUtil.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM WatchList WHERE watchlist_itemid = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM WatchList WHERE watchlist_id = ?");
             stmt.setInt(1, watchListID);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                // Fill rest once everything is figured out
+                int watchlistItemID = rs.getInt("watchlist_itemid");
+                int userID = rs.getInt("user_id");
+
+                // Need to do a loop to iterate through the watchlist itemIDs and put them all in a list
+                for ()
+
             }
         } catch (Exception e) {
             err.println("Error finding watchlist: " + e.getMessage());
@@ -31,6 +37,7 @@ public class WatchlistDAOImpl implements WatchlistDAO {
             DbUtil.closeQuietly(conn);
         }
     }
+
 
 
 }
