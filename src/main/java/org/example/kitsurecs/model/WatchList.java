@@ -3,19 +3,19 @@ package org.example.kitsurecs.model;
 import java.util.List;
 
 public class WatchList {
-    private final String WatchListId;
-    private final String watchListItemId;
-    private final String user_id;
+    private final int WatchListId;
+    private final int watchListItemId;
+    private final int user_id;
     private List<WatchListItem> watchListItems;
 
     //getters
-    public String getWatchListId() {
+    public int getWatchListId() {
         return WatchListId;
     }
-    public String getWatchListItemId() {
+    public int getWatchListItemId() {
         return watchListItemId;
     }
-    public String getUserId() {
+    public int getUserId() {
         return user_id;
     }
     public List<WatchListItem> getWatchListItems() {
@@ -28,15 +28,22 @@ public class WatchList {
     }
 
     //constructor
-    public WatchList(String watchListId, String watchListItemId, String user_id, List<WatchListItem> watchListItems) {
+    public WatchList(int watchListId, int watchListItemId, int user_id, List<WatchListItem> watchListItems) {
         this.WatchListId = watchListId;
         this.watchListItemId = watchListItemId;
         this.user_id = user_id;
         this.watchListItems = watchListItems;
     }
 
+    public WatchList(int watchListId, int user_id, List<WatchListItem> watchListItems) {
+        this.WatchListId = watchListId;
+        this.user_id = user_id;
+        this.watchListItems = watchListItems;
+
+    }
+
     //Method
-    public WatchListItem AddWatchListItem(String watchListItemId, int anime_id, boolean watched, boolean favorite) {
+    public WatchListItem AddWatchListItem(int watchListItemId, int anime_id, boolean watched, boolean favorite) {
         WatchListItem watchListItem = new WatchListItem(watchListItemId, anime_id, watched, favorite);
         watchListItems.add(watchListItem);
         return watchListItem;

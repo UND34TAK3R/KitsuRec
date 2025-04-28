@@ -17,7 +17,7 @@ public interface WatchlistDAO {
      * Find all watchlist
      * @return list of WatchLists
      */
-    List<WatchList> findWatchLists();
+    List<WatchList> findAllWatchLists();
 
     /**
      * Saves the WatchList (if changes are made or automatically creates one of none exists)
