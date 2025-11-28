@@ -13,4 +13,4 @@ Website created in inspiration to MyAnimeList, in which the API is directly pull
 -
 
 ## Contributor Roles:
-- Derrick Mangari: Models, API (OAuth), API Related Servlets (Controllers), configurated API files
+- Derrick Mangari: Models, API (OAuth 2.0), API Related Servlets (Controllers), configurated API files
